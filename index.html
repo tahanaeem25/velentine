@@ -97,7 +97,10 @@
 <body>
 
 <!-- 🎵 Background Music -->
-<audio id="bgMusic" src="song.mp3" loop></audio>
+<audio id="bgMusic" loop>
+    <source src="song.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
 
 <div class="container">
     <h1 id="title">Reeba Will you be my Valentine? 🥺👉👈</h1>
@@ -121,25 +124,14 @@
         "Really sure?? 😭",
         "Try Again.... 💔",
         "Think again 😠",
-        "Dont u try to say No again 😠😠"
+        "Don't u try to say No again 😠😠"
     ];
 
     let messageIndex = 0;
     let scale = 1;
-    let musicStarted = false;
 
-   function startMusic() {
-    const music = document.getElementById("bgMusic");
-    if (!music.played.length) { // prevents multiple triggers
-        music.volume = 0.5;
-        music.play().catch(() => {}); // safe fallback for browsers
-    }
-}
-
+    // Move & shrink "No" button
     function moveAndShrink() {
-
-        startMusic();
-
         if (messageIndex < messages.length) {
             title.textContent = messages[messageIndex];
             messageIndex++;
@@ -166,19 +158,26 @@
         moveAndShrink();
     });
 
+    // "Yes" button click
     yesBtn.addEventListener("click", () => {
+        // Start music from 36 seconds
+        music.currentTime = 36;
+        music.volume = 0.5;
+        music.play().catch(() => { console.log("Autoplay blocked until user interacts."); });
 
-        startMusic();
-
+        // Change title & GIF
         title.textContent = "YAYYYYY!!! 💖💖💖 I Love u Bacha!";
         gif.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGdtbnhrbTY3MHF1aTZ1Y2o5a3Q0cDRqeXZhYmtpaW52a2t5bzI5diZlcD12MV9naWZzX3NlYXJjaCZjdD1n/ytu2GUYbvhz7zShGwS/giphy.gif";
 
+        // Hide buttons
         noBtn.style.display = "none";
         yesBtn.style.display = "none";
 
+        // Start hearts animation
         startHearts();
     });
 
+    // Hearts animation
     function startHearts() {
         setInterval(() => {
             const heart = document.createElement("div");
@@ -197,5 +196,3 @@
 
 </body>
 </html>
-
-
