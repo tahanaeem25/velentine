@@ -128,13 +128,13 @@
     let scale = 1;
     let musicStarted = false;
 
-    function startMusic() {
-        if (!musicStarted) {
-            music.volume = 0.5;
-            music.play().catch(() => {});
-            musicStarted = true;
-        }
+   function startMusic() {
+    const music = document.getElementById("bgMusic");
+    if (!music.played.length) { // prevents multiple triggers
+        music.volume = 0.5;
+        music.play().catch(() => {}); // safe fallback for browsers
     }
+}
 
     function moveAndShrink() {
 
@@ -197,4 +197,5 @@
 
 </body>
 </html>
+
 
